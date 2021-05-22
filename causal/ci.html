@@ -1,0 +1,509 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Causal Inference &#8212; AI Notes</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet" />
+  <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.acff12b8f9c144ce68a297486a2fa670.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Gaussian Mixture Models with TensorFlow Probability" href="../gen/gmm.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+      <img src="../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">AI Notes</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro.html">
+   AI Notes
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  about
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../about/about.html">
+   About me
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../about/projects.html">
+     Projects
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../about/resume.html">
+     Resume
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  reinforcement learning
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../rl/dqn.html">
+   Deep Q Network (DQN)
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  generative model
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../gen/gmm.html">
+   Gaussian Mixture Models with TensorFlow Probability
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  causality
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Causal Inference
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/causal/ci.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/jetnew/book"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/jetnew/book/issues/new?title=Issue%20on%20page%20%2Fcausal/ci.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Causal Inference
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#correlation-and-causation">
+     Correlation and Causation
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-fundamental-problem-of-causal-inference">
+   The Fundamental Problem of Causal Inference
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#individual-and-average-treatment-effects">
+     Individual and Average Treatment Effects
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#associational-and-causal-quantities">
+     Associational and Causal Quantities
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#randomized-control-trials">
+     Randomized Control Trials
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#assumptions-for-identification">
+   Assumptions for Identification
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#identifiability">
+     Identifiability
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ignorability-exchangeability">
+     Ignorability / Exchangeability
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#assumption-1-conditional-exchangeability-unconfoundedness">
+     Assumption 1: Conditional Exchangeability / Unconfoundedness
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#assumption-2-positivity-overlap-common-support">
+     Assumption 2: Positivity / Overlap / Common Support
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#assumption-3-no-interference">
+     Assumption 3: No Interference
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#assumption-4-consistency">
+     Assumption 4: Consistency
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#identification-of-the-causal-effect">
+   Identification of the Causal Effect
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="causal-inference">
+<h1>Causal Inference<a class="headerlink" href="#causal-inference" title="Permalink to this headline">¶</a></h1>
+<p>Causal inference is the inference of the effect of any treatment of <span class="math notranslate nohighlight">\(T\)</span> on the outcome <span class="math notranslate nohighlight">\(Y\)</span>, based on the causal structure of the underlying process, e.g. inferring the effect of a treatment on a disease.</p>
+<div class="section" id="correlation-and-causation">
+<h2>Correlation and Causation<a class="headerlink" href="#correlation-and-causation" title="Permalink to this headline">¶</a></h2>
+<p>Correlation is not causation. A confounder variable <span class="math notranslate nohighlight">\(Z\)</span> can confound the association between the treatment variable <span class="math notranslate nohighlight">\(T\)</span> and outcome variable <span class="math notranslate nohighlight">\(Y\)</span>. The potential outcome <span class="math notranslate nohighlight">\(Y(t)\)</span> is the outcome of taking a particular treatment <span class="math notranslate nohighlight">\(T=t\)</span>.</p>
+</div>
+</div>
+<div class="section" id="the-fundamental-problem-of-causal-inference">
+<h1>The Fundamental Problem of Causal Inference<a class="headerlink" href="#the-fundamental-problem-of-causal-inference" title="Permalink to this headline">¶</a></h1>
+<p>It is impossible to observe all potential outcomes for a given individual, because the opposite treatment cannot be repeated on the same individual in the past. Counterfactuals are potential outcomes that are not observed and cannot be observed because they are counter to fact. Because counterfactuals cannot be observed, it is fundamentally a missing data problem.</p>
+<div class="section" id="individual-and-average-treatment-effects">
+<h2>Individual and Average Treatment Effects<a class="headerlink" href="#individual-and-average-treatment-effects" title="Permalink to this headline">¶</a></h2>
+<p>The individual treatment effect (ITE) <span class="math notranslate nohighlight">\(\tau_i\)</span> is the causal effect of taking a treatment on a potential outcome. The ITE computes the difference in potential outcomes of an individual given different treatments.</p>
+<div class="math notranslate nohighlight">
+\[ \tau_i \overset{\Delta}{=} Y_i(1)-Y_i(0)\]</div>
+<p>The average treatment effect (ATE) <span class="math notranslate nohighlight">\(\tau\)</span> is an average over ITEs, because the ITE cannot easily be accessed. The ATE computes the difference in expected potential outcomes given different treatments.</p>
+<div class="math notranslate nohighlight">
+\[ \tau \overset{\Delta}{=} E[Y_i(1)-Y_i(0)] = E[Y(1)-Y(0)] \]</div>
+</div>
+<div class="section" id="associational-and-causal-quantities">
+<h2>Associational and Causal Quantities<a class="headerlink" href="#associational-and-causal-quantities" title="Permalink to this headline">¶</a></h2>
+<p>The ITE and ATE are causal quantities that are not equal to the conditional expectation, which is an associational quantity, due to the existence of confounders.</p>
+<p>When confounding exists, the ATE:</p>
+<div class="math notranslate nohighlight">
+\[ \underbrace{E[Y(1)]-E[Y(0)]}_{causal} \neq \underbrace{E[Y\vert T=1]-E[Y\vert T=0]}_{associational}\]</div>
+<p>When confounding does not exist, the ATE:</p>
+<div class="math notranslate nohighlight">
+\[ \underbrace{E[Y(1)]-E[Y(0)]}_{causal} = \underbrace{E[Y\vert T=1]-E[Y\vert T=0]}_{associational} \]</div>
+<p>Identification is the computation of causal quantities from associational quantities, which requires assumptions about the causal structures of the underlying processes.</p>
+</div>
+<div class="section" id="randomized-control-trials">
+<h2>Randomized Control Trials<a class="headerlink" href="#randomized-control-trials" title="Permalink to this headline">¶</a></h2>
+<p>A randomized control trial (RCT) is the random assignment of individuals into the treatment or control group. As a result, the treatment variable <span class="math notranslate nohighlight">\(T\)</span> does not have any causal parents, removing the confounding association, isolating the causal association to allow identification.</p>
+</div>
+</div>
+<div class="section" id="assumptions-for-identification">
+<h1>Assumptions for Identification<a class="headerlink" href="#assumptions-for-identification" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="identifiability">
+<h2>Identifiability<a class="headerlink" href="#identifiability" title="Permalink to this headline">¶</a></h2>
+<p>A causal quantity is identifiable if it can be computed from a purely statistical/associational quantity.</p>
+</div>
+<div class="section" id="ignorability-exchangeability">
+<h2>Ignorability / Exchangeability<a class="headerlink" href="#ignorability-exchangeability" title="Permalink to this headline">¶</a></h2>
+<div class="math notranslate nohighlight">
+\[ (Y(1),Y(0)) \perp\!\!\!\perp T \]</div>
+<p>Ignorability of how the treatment was assigned, i.e. assuming random assignment of the treatment, allows reduction of the ATE to the associational quantity.</p>
+<div class="math notranslate nohighlight">
+\[ E[Y(1)-E[Y(0)] \]</div>
+<div class="math notranslate nohighlight">
+\[ = E[Y(1)\vert Y=1]-E[Y(0)\vert T=0] \tag{Ignorability} \]</div>
+<div class="math notranslate nohighlight">
+\[ = E[Y\vert T=1]-E[Y\vert T=0] \]</div>
+<p>Exchangeability of treatment and control groups means that the same outcomes are observed should they be exchanged and thus are comparable. In reality, ignorability/exchangeability does not usually hold due to confounding but can be applied using randomized control trials (RCTs).</p>
+</div>
+<div class="section" id="assumption-1-conditional-exchangeability-unconfoundedness">
+<h2>Assumption 1: Conditional Exchangeability / Unconfoundedness<a class="headerlink" href="#assumption-1-conditional-exchangeability-unconfoundedness" title="Permalink to this headline">¶</a></h2>
+<div class="math notranslate nohighlight">
+\[ (Y(1),Y(0)) \perp\!\!\!\perp T\vert X \]</div>
+<p>Controlling for <span class="math notranslate nohighlight">\(X\)</span> by conditioning on <span class="math notranslate nohighlight">\(X\)</span> results in treatment groups being comparable, removing any non-causal association between treatment <span class="math notranslate nohighlight">\(T\)</span> and outcome <span class="math notranslate nohighlight">\(Y\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[ E[Y(1)-Y(0)\vert X] \]</div>
+<div class="math notranslate nohighlight">
+\[ = E[Y(1)\vert X] - E[Y(0)\vert X] \]</div>
+<div class="math notranslate nohighlight">
+\[ = E[Y(1)\vert T=1,X] - E[Y(0)\vert T=0,X] \]</div>
+<div class="math notranslate nohighlight">
+\[ = E[Y\vert T=1,X] - E[Y\vert T=0,X] \]</div>
+<p>The marginal effect before assuming unconditional exchangeability can be obtained by marginalizing out <span class="math notranslate nohighlight">\(X\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[ E[Y(1)-Y(0)] \]</div>
+<div class="math notranslate nohighlight">
+\[ = E_X E[Y(1)-Y(0)\vert X] \]</div>
+<div class="math notranslate nohighlight">
+\[ = E_X [E[Y\vert T=1,X] - E[Y\vert T=0,X]] \]</div>
+<p>In contrast to exchangeability, conditional exchangeability allows conditioning on X to identify the causal effect.</p>
+</div>
+<div class="section" id="assumption-2-positivity-overlap-common-support">
+<h2>Assumption 2: Positivity / Overlap / Common Support<a class="headerlink" href="#assumption-2-positivity-overlap-common-support" title="Permalink to this headline">¶</a></h2>
+<p>For all values of covariates <span class="math notranslate nohighlight">\(x\)</span> present in the population of interest (such that <span class="math notranslate nohighlight">\(P(X=x)&gt;0\)</span>),</p>
+<div class="math notranslate nohighlight">
+\[ 0 &lt; P(T=1\vert X=x) &lt; 1 \]</div>
+<p>If positivity is violated, a zero probability event will be conditioned on, translating into a division by zero when Baye’s rule is applied on:</p>
+<div class="math notranslate nohighlight">
+\[ E_X [E[Y\vert T=1,X] - E[Y\vert T=0,X]] \]</div>
+<p>A positivity violation happens when, within some subgroup of data, every individual receives the treatment or every individual receives the control, and the causal effect of treatment vs. control cannot be estimated because the alternative is not observed.</p>
+</div>
+<div class="section" id="assumption-3-no-interference">
+<h2>Assumption 3: No Interference<a class="headerlink" href="#assumption-3-no-interference" title="Permalink to this headline">¶</a></h2>
+<p>No interference holds if one individual’s outcome is unaffected by another’s treatment, i.e. one individual’s outcome is only a function of one’s own treatment.</p>
+<div class="math notranslate nohighlight">
+\[ Y_i(t_1, ..., t_i, ..., t_n) = Y_i(t_i) \]</div>
+</div>
+<div class="section" id="assumption-4-consistency">
+<h2>Assumption 4: Consistency<a class="headerlink" href="#assumption-4-consistency" title="Permalink to this headline">¶</a></h2>
+<p>Consistency of the treatment holds if the observed outcome <span class="math notranslate nohighlight">\(Y\)</span> is actually the potential outcome under the observed treatment <span class="math notranslate nohighlight">\(T\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[ (T=t \rightarrow Y=Y(t)) \]</div>
+<div class="math notranslate nohighlight">
+\[ \equiv Y=Y(T) \]</div>
+<p>A consistency violation happens if the treatment specification is too coarse. Different versions of the same treatment exists, resulting in different potential outcomes even if the same treatment is applied.</p>
+</div>
+</div>
+<div class="section" id="identification-of-the-causal-effect">
+<h1>Identification of the Causal Effect<a class="headerlink" href="#identification-of-the-causal-effect" title="Permalink to this headline">¶</a></h1>
+<p>When all 4 assumptions (unconfoundedness, positivity, no interference, consistency) hold, the causal effect can be identified from the associational quantities.</p>
+<div class="math notranslate nohighlight">
+\[E[Y(1)-Y(0)] \tag{No Interference}\]</div>
+<div class="math notranslate nohighlight">
+\[=E[Y(1)]-E[Y(0)] \tag{Linearity of Expectation}\]</div>
+<div class="math notranslate nohighlight">
+\[=E_X[E[Y(1)|x]-E[Y(0)|X]] \tag{Law of Iterated Expectations}\]</div>
+<div class="math notranslate nohighlight">
+\[=E_X[E|Y(1)|T=1,X]-E[Y(0)|T=0,X]] \tag{Unconfoundedness and Positivity}\]</div>
+<div class="math notranslate nohighlight">
+\[=E_X[E[Y|T=1,X]-E[Y|T=0,X]] \tag{Consistency}\]</div>
+</div>
+<div class="section" id="references">
+<h1>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h1>
+<p>Introduction to Causal Inference from a Machine Learning Perspective, <a class="reference external" href="https://www.bradyneal.com/causal-inference-course">Brady Neal 2020</a>.</p>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./causal"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+    <a class='left-prev' id="prev-link" href="../gen/gmm.html" title="previous page">Gaussian Mixture Models with TensorFlow Probability</a>
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Jet New<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  
+  </body>
+</html>

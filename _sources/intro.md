@@ -1,7 +1,4 @@
-Welcome to your Jupyter Book
-============================
+AI Notes
+======
 
-This is a small sample book to give you a feel for how book content is
-structured.
-
-Check out the content pages bundled with this sample book to get started.
+This book is for personal usage for learning AI concepts.
