@@ -1,8 +1,20 @@
-# Table of content
-# Learn more at https://jupyterbook.org/customize/toc.html
-#
 - file: intro
-- file: content
-  sections:
-    - file: markdown
-    - file: notebooks
+
+- part: about
+  chapters:
+  - file: about/about
+    sections:
+    - file: about/projects
+    - file: about/resume
+
+- part: reinforcement learning
+  chapters:
+  - file: rl/dqn
+
+- part: generative model
+  chapters:
+  - file: gen/gmm
+
+- part: causality
+  chapters:
+  - file: causal/ci
