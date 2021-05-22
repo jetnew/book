@@ -1,0 +1,706 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Genetic Algorithm &#8212; AI Notes</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet" />
+  <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.acff12b8f9c144ce68a297486a2fa670.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Causal Inference" href="../causal/ci.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+      <img src="../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">AI Notes</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro.html">
+   AI Notes
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  about
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../about/about.html">
+   About me
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../about/projects.html">
+     Projects
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../about/resume.html">
+     Resume
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  reinforcement learning
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../rl/dqn.html">
+   Deep Q Network (DQN)
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  generative model
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../gen/gmm.html">
+   Gaussian Mixture Models with TensorFlow Probability
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  causality
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../causal/ci.html">
+   Causal Inference
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  evolutionary algorithms
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Genetic Algorithm
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/evo/ga.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/jetnew/book"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/jetnew/book/issues/new?title=Issue%20on%20page%20%2Fevo/ga.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/jetnew/book/main?urlpath=tree/docs/evo/ga.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Genetic Algorithm
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#optimization-problem-linear-regression">
+   Optimization Problem: Linear Regression
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#process-1-generate-the-initial-population-of-individuals">
+   Process 1: Generate the initial population of individuals.
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#process-2-compute-the-fitness-of-all-individuals">
+   Process 2: Compute the fitness of all individuals.
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#process-3-select-the-fittest-individuals">
+   Process 3: Select the fittest individuals.
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#process-4-perform-crossing-over-between-parents-to-produce-children">
+   Process 4: Perform crossing-over between parents to produce children.
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#process-5-perform-mutation-on-the-population">
+   Process 5: Perform mutation on the population.
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-genetic-algorithm-all-5-processes-together">
+   The Genetic Algorithm: All 5 Processes Together
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#experiment-result">
+   Experiment Result
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="genetic-algorithm">
+<h1>Genetic Algorithm<a class="headerlink" href="#genetic-algorithm" title="Permalink to this headline">¶</a></h1>
+<p>The genetic algorithm is a nature-inspired algorithm based on natural selection, that the fittest individuals of a population are selected to reproduce the next generation. 1st of a 3-part series on evolutionary computation (Part 2 - <a class="reference external" href="https://jetnew.io/posts/2020/11/neuroevolution/">Neuroevolution</a>, Part 3 - <a class="reference external" href="https://jetnew.io/posts/2020/11/novelty-search/">Novelty Search</a>).</p>
+<p>The genetic algorithm consists of 5 processes:</p>
+<ol class="simple">
+<li><p>Initial population</p></li>
+<li><p>Fitness function</p></li>
+<li><p>Selection</p></li>
+<li><p>Crossing-over</p></li>
+<li><p>Mutation</p></li>
+</ol>
+<p>Terminology:</p>
+<ul class="simple">
+<li><p>Population refers to the set of individuals (solution).</p></li>
+<li><p>Individual is defined by its chromsome (set of parameters/variables).</p></li>
+<li><p>Fitness function refers to the performance measure of an individual.</p></li>
+<li><p>Selection refers to the selection of the fittest.</p></li>
+<li><p>Crossing-over refers to a swapping of segments of 2 parents’ genes, producing a child individual with a new gene combination.</p></li>
+<li><p>Mutation is a random perturbation of genes based on a probability.</p></li>
+</ul>
+</div>
+<div class="section" id="optimization-problem-linear-regression">
+<h1>Optimization Problem: Linear Regression<a class="headerlink" href="#optimization-problem-linear-regression" title="Permalink to this headline">¶</a></h1>
+<p>Evolutionary algorithms can serve as “black box” optimisation algorithms without needing to solving the objective function analytically. To illustrate that evolutionary algorithms can optimise, the simple linear regression problem is used. Define a linear function:
+$<span class="math notranslate nohighlight">\(y = mx + c + \epsilon\)</span><span class="math notranslate nohighlight">\(
+to be modelled by a linear regression model, where \)</span>m=1<span class="math notranslate nohighlight">\(, \)</span>c=0<span class="math notranslate nohighlight">\(, \)</span>\epsilon\sim N(0,1)$ represents gradient, y-intercept and Gaussian noise respectively.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># for reproducibility</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">X</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Linear function with Gaussian noise&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;.&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/ga_3_0.png" src="../_images/ga_3_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="process-1-generate-the-initial-population-of-individuals">
+<h1>Process 1: Generate the initial population of individuals.<a class="headerlink" href="#process-1-generate-the-initial-population-of-individuals" title="Permalink to this headline">¶</a></h1>
+<p>Each individual (solution/model) is defined by a set of parameters. Hyperparameters to be specified, which are variables that are not updated at every iteration of optimisation, are the population size (number of individuals in the population at any point in time) and the number of parameters that defines an individual. The initial population’s parameters can be zero-initialised or random-initialised. For your interest, there also exists many other initialisation methods to be used depending on context, such as the He initialisation and Xavier initialisation. The set of parameters that defines each individual is biologically analogous to the individual’s genome (or gene or chromosome, depending on the computational process).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">population_size</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">num_parameters</span> <span class="o">=</span> <span class="mi">2</span>
+
+<span class="c1"># initial_population = np.zeros(shape=(population_size, num_parameters))  # zero initialisation</span>
+<span class="n">initial_population</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">population_size</span><span class="p">,</span> <span class="n">num_parameters</span><span class="p">))</span>  <span class="c1"># random normal initialisation</span>
+<span class="n">initial_population</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ 1.8831507 , -1.34775906],
+       [-1.270485  ,  0.96939671],
+       [-1.17312341,  1.94362119],
+       [-0.41361898, -0.74745481],
+       [ 1.92294203,  1.48051479],
+       [ 1.86755896,  0.90604466],
+       [-0.86122569,  1.91006495],
+       [-0.26800337,  0.8024564 ],
+       [ 0.94725197, -0.15501009],
+       [ 0.61407937,  0.92220667]])
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="process-2-compute-the-fitness-of-all-individuals">
+<h1>Process 2: Compute the fitness of all individuals.<a class="headerlink" href="#process-2-compute-the-fitness-of-all-individuals" title="Permalink to this headline">¶</a></h1>
+<p>Another 2 hyperparameters are in the form of functions - the solution and the fitness function. The solution is a model that uses the individual’s parameters to compute the output <span class="math notranslate nohighlight">\(y\)</span> given input <span class="math notranslate nohighlight">\(X\)</span>. For simplicity, we use the polynomial regression model (with 2 parameters, it is a simple linear regression model). The fitness function measures the performance of an individual solution. The evolutionary analogy of the fitness function of an organism would be, for example, its survivability and/or reproductive success. Because we want to model the linear function with Gaussian noise dataset, the negative mean squared error (MSE) is used as the fitness function to determine how well the solution models the dataset. Because the fitness function is to be maximised, MSE is negated to reflect a higher value of MSE as more desirable.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">solution</span><span class="p">(</span><span class="n">params</span><span class="p">):</span>  <span class="c1"># Polynomial regression model</span>
+  <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span><span class="n">params</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">X</span><span class="o">**</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">params</span><span class="p">))],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">fitness_function</span><span class="p">(</span><span class="n">params</span><span class="p">):</span>  <span class="c1"># Mean squared error</span>
+  <span class="k">return</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">solution</span><span class="p">(</span><span class="n">params</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">plot_data</span><span class="p">():</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;.&#39;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">plot_individual</span><span class="p">(</span><span class="n">individual</span><span class="p">):</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">solution</span><span class="p">(</span><span class="n">individual</span><span class="p">),</span> <span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;grey&#39;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">plot_population</span><span class="p">(</span><span class="n">population</span><span class="p">):</span>
+  <span class="k">for</span> <span class="n">individual</span> <span class="ow">in</span> <span class="n">population</span><span class="p">:</span>
+    <span class="n">plot_individual</span><span class="p">(</span><span class="n">individual</span><span class="p">)</span>
+
+<span class="n">individual</span> <span class="o">=</span> <span class="n">initial_population</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">fitness_score</span> <span class="o">=</span> <span class="n">fitness_function</span><span class="p">(</span><span class="n">individual</span><span class="p">)</span>
+
+<span class="n">plot_data</span><span class="p">()</span>
+<span class="n">plot_individual</span><span class="p">(</span><span class="n">individual</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">plot_data</span><span class="p">()</span>
+<span class="n">plot_population</span><span class="p">(</span><span class="n">initial_population</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/ga_7_0.png" src="../_images/ga_7_0.png" />
+<img alt="../_images/ga_7_1.png" src="../_images/ga_7_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">compute_fitness</span><span class="p">(</span><span class="n">population</span><span class="p">):</span>
+  <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">fitness_function</span><span class="p">(</span><span class="n">individual</span><span class="p">)</span> <span class="k">for</span> <span class="n">individual</span> <span class="ow">in</span> <span class="n">population</span><span class="p">])</span>
+
+<span class="n">fitness_scores</span> <span class="o">=</span> <span class="n">compute_fitness</span><span class="p">(</span><span class="n">initial_population</span><span class="p">)</span>
+<span class="n">fitness_scores</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([-145.00615079,   -3.20852429,  -21.20939814, -110.93013108,
+        -21.41800978,   -2.83355152,  -21.68891802,   -2.97834017,
+        -35.66225857,   -1.05527391])
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="process-3-select-the-fittest-individuals">
+<h1>Process 3: Select the fittest individuals.<a class="headerlink" href="#process-3-select-the-fittest-individuals" title="Permalink to this headline">¶</a></h1>
+<p>Like natural selection, select the top <span class="math notranslate nohighlight">\(k\)</span> percentage of individuals with the highest fitness scores, where <span class="math notranslate nohighlight">\(k\)</span> is a hyperparameter, to form the parent subpopulation that will reproduce to form the next generation of the population later.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_fittest</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="n">fitness_scores</span><span class="p">):</span>
+  <span class="k">return</span> <span class="n">population</span><span class="p">[</span><span class="n">fitness_scores</span><span class="o">.</span><span class="n">argmax</span><span class="p">(),</span> <span class="p">:]</span>
+
+<span class="k">def</span> <span class="nf">select_fittest</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="n">fitness_scores</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mf">0.5</span><span class="p">):</span>
+  <span class="k">return</span> <span class="n">population</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">fitness_scores</span><span class="p">)[</span><span class="o">-</span><span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">)</span> <span class="o">*</span> <span class="n">k</span><span class="p">):],</span> <span class="p">:]</span>
+
+<span class="n">parent_subpopulation</span> <span class="o">=</span> <span class="n">select_fittest</span><span class="p">(</span><span class="n">initial_population</span><span class="p">,</span> <span class="n">fitness_scores</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+<span class="n">parent_subpopulation</span><span class="p">,</span> <span class="n">compute_fitness</span><span class="p">(</span><span class="n">parent_subpopulation</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([[1.86755896, 0.90604466],
+        [0.61407937, 0.92220667]]),
+ array([-2.83355152, -1.05527391]))
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="process-4-perform-crossing-over-between-parents-to-produce-children">
+<h1>Process 4: Perform crossing-over between parents to produce children.<a class="headerlink" href="#process-4-perform-crossing-over-between-parents-to-produce-children" title="Permalink to this headline">¶</a></h1>
+<p>Crossing-over is a biological process that exchanges genetic material to result in new combinations of genetic material. For the benefit of non-biology students, much detail has been abstracted out, so for your interest, refer to chromosomal crossovers. In the genetic algorithm, crossing-over is performed during reproduction by swapping a segment of parameters of one parent with another parent. For example, take 2 parents defined by 4 parameters:</p>
+<div class="math notranslate nohighlight">
+\[P1 = [A1, A2, A3, A4],  P2 = [B1, B2, B3, B4]\]</div>
+<p>A crossing-over at the index 3 will result in a child:</p>
+<div class="math notranslate nohighlight">
+\[C = [A1, A2, B3, B4]\]</div>
+<p>There exists other methods of genetic exchange to introduce variance in the population gene pool, such as swapping elements instead of segments.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">perform_crossingover</span><span class="p">(</span><span class="n">subpopulation</span><span class="p">):</span>
+  <span class="n">children</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">population_size</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">subpopulation</span><span class="p">)):</span>
+    <span class="n">parents</span> <span class="o">=</span> <span class="n">subpopulation</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">subpopulation</span><span class="p">),</span> <span class="mi">2</span><span class="p">)]</span>
+    <span class="n">gene_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_parameters</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">gene_indices</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">gene_indices</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">):]</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># segment swap</span>
+    <span class="n">child</span> <span class="o">=</span> <span class="n">parents</span><span class="p">[</span><span class="n">gene_indices</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">num_parameters</span><span class="p">)]</span>
+    <span class="n">children</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">subpopulation</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">children</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">next_population</span> <span class="o">=</span> <span class="n">perform_crossingover</span><span class="p">(</span><span class="n">parent_subpopulation</span><span class="p">)</span>
+<span class="n">next_population</span><span class="p">,</span> <span class="n">compute_fitness</span><span class="p">(</span><span class="n">next_population</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([[1.86755896, 0.90604466],
+        [0.61407937, 0.92220667],
+        [0.61407937, 0.92220667],
+        [1.86755896, 0.90604466],
+        [0.61407937, 0.92220667],
+        [0.61407937, 0.92220667],
+        [1.86755896, 0.92220667],
+        [0.61407937, 0.92220667],
+        [1.86755896, 0.92220667],
+        [0.61407937, 0.92220667]]),
+ array([-2.83355152, -1.05527391, -1.05527391, -2.83355152, -1.05527391,
+        -1.05527391, -3.04089715, -1.05527391, -3.04089715, -1.05527391]))
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="process-5-perform-mutation-on-the-population">
+<h1>Process 5: Perform mutation on the population.<a class="headerlink" href="#process-5-perform-mutation-on-the-population" title="Permalink to this headline">¶</a></h1>
+<p>A mutation is defined as a change in the DNA sequence. While the exact differences between DNA, gene and chromosome in the genetic algorithm are not maintained, inspiration is drawn from mutation in biology that usually worsens fitness but can occasionally improve fitness of the individual. To perform mutation on the population parameters, add Gaussian noise <span class="math notranslate nohighlight">\(\epsilon\sim N(0, \sigma)\)</span> to the individuals’ parameters, where <span class="math notranslate nohighlight">\(\sigma\)</span> is the standard deviation hyperparameter.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">perform_mutation</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
+  <span class="k">return</span> <span class="n">population</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">population</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>  <span class="c1"># Gaussian noise</span>
+
+<span class="n">mutated_population</span> <span class="o">=</span> <span class="n">perform_mutation</span><span class="p">(</span><span class="n">next_population</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+<span class="n">mutated_population</span><span class="p">,</span> <span class="n">compute_fitness</span><span class="p">(</span><span class="n">mutated_population</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([[1.86732417, 0.90693888],
+        [0.6081361 , 0.9211497 ],
+        [0.62150733, 0.91465686],
+        [1.86617613, 0.88479546],
+        [0.60377918, 0.91703215],
+        [0.61266137, 0.90944187],
+        [1.88237409, 0.93879944],
+        [0.61408077, 0.93726506],
+        [1.86860417, 0.91984624],
+        [0.62227372, 0.92623524]]),
+ array([-2.84393595, -1.0525611 , -1.05282308, -2.58416917, -1.04907953,
+        -1.04977737, -3.3166936 , -1.07545786, -3.01246558, -1.0622913 ]))
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="the-genetic-algorithm-all-5-processes-together">
+<h1>The Genetic Algorithm: All 5 Processes Together<a class="headerlink" href="#the-genetic-algorithm-all-5-processes-together" title="Permalink to this headline">¶</a></h1>
+<p>By combining the 5 processes together, we construct the genetic algorithm and run it to find a solution that models the linear function well.</p>
+<p>Genetic Algorithm:</p>
+<ol class="simple">
+<li><p>Generate the initial population of individuals.</p></li>
+<li><p>Repeat until convergence:</p></li>
+<li><p>Compute fitness of the population.</p></li>
+<li><p>Select the fittest individuals (parent subpopulation).</p></li>
+<li><p>Perform crossing-over between parents to produce children.</p></li>
+<li><p>Perform mutation on the population.</p></li>
+<li><p>Select the fittest individual of the population as the solution.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define hyperparameters of the genetic algorithm.</span>
+<span class="n">population_size</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">num_parameters</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">num_generations</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">top_k</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="n">mutation_sigma</span> <span class="o">=</span> <span class="mf">0.01</span>
+
+<span class="c1"># Process 1: Generate the initial population of individuals.</span>
+<span class="n">population</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">population_size</span><span class="p">,</span> <span class="n">num_parameters</span><span class="p">))</span>
+
+<span class="c1"># Misc: Experimental tracking</span>
+<span class="n">scores</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">solutions</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="c1"># Iterate the process over multiple generations of populations.</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_generations</span><span class="p">):</span>
+
+  <span class="c1"># Process 2: Compute the fitness of all individuals.</span>
+  <span class="n">fitness_scores</span> <span class="o">=</span> <span class="n">compute_fitness</span><span class="p">(</span><span class="n">population</span><span class="p">)</span>
+
+  <span class="c1"># Process 3: Select the fittest individuals.</span>
+  <span class="n">fittest_subpopulation</span> <span class="o">=</span> <span class="n">select_fittest</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="n">fitness_scores</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="n">top_k</span><span class="p">)</span>
+  
+  <span class="c1"># Misc: Experimental tracking</span>
+  <span class="n">fittest</span> <span class="o">=</span> <span class="n">get_fittest</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="n">fitness_scores</span><span class="p">)</span>
+  <span class="n">solutions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">solution</span><span class="p">(</span><span class="n">fittest</span><span class="p">))</span>
+  <span class="n">scores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fitness_function</span><span class="p">(</span><span class="n">fittest</span><span class="p">))</span>
+
+  <span class="c1"># Process 4: Perform crossing-over between parents to produce children.</span>
+  <span class="n">children</span> <span class="o">=</span> <span class="n">perform_crossingover</span><span class="p">(</span><span class="n">fittest_subpopulation</span><span class="p">)</span>
+
+  <span class="c1"># Process 5: Perform mutation on the population.</span>
+  <span class="n">population</span> <span class="o">=</span> <span class="n">perform_mutation</span><span class="p">(</span><span class="n">children</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="n">mutation_sigma</span><span class="p">)</span>
+
+
+<span class="c1"># Misc: Experimental tracking</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">num_generations</span><span class="p">),</span> <span class="n">scores</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/ga_16_0.png" src="../_images/ga_16_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="experiment-result">
+<h1>Experiment Result<a class="headerlink" href="#experiment-result" title="Permalink to this headline">¶</a></h1>
+<p>The fittest individual in the final population is a reasonably well-fit linear regression model. The rest of the population have a lower fitness score but are quite well-fit as well.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fitness_score</span> <span class="o">=</span> <span class="n">fitness_function</span><span class="p">(</span><span class="n">fittest</span><span class="p">)</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">solution</span><span class="p">(</span><span class="n">fittest</span><span class="p">)</span>
+
+<span class="n">plot_data</span><span class="p">()</span>
+<span class="n">plot_individual</span><span class="p">(</span><span class="n">fittest</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">plot_data</span><span class="p">()</span>
+<span class="n">plot_population</span><span class="p">(</span><span class="n">fittest_subpopulation</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/ga_18_0.png" src="../_images/ga_18_0.png" />
+<img alt="../_images/ga_18_1.png" src="../_images/ga_18_1.png" />
+</div>
+</div>
+<p>By visualising the fittest model at each generation (iteration) of the genetic algorithm, notice that virtually instantly, the linear regression model fits to the dataset. In fact, linear regression is too simple a problem to realise the effectiveness of the genetic algorithm. Nonetheless, the reason for using linear regression is to bring focus to the genetic algorithm without the overhead of needing to understand the model. For a more complex application of the genetic algorithm using neural networks, refer to <a class="reference external" href="https://jetnew.io/posts/2020/11/neuroevolution/">Part 2</a> of the Evolutionary Computation series on Neuroevolution. For an evolutionary strategy based on novelty applied on reinforcement learning, refer to <a class="reference external" href="https://jetnew.io/posts/2020/11/novelty-search/">Part 3</a>.</p>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./evo"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+    <a class='left-prev' id="prev-link" href="../causal/ci.html" title="previous page">Causal Inference</a>
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Jet New<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  
+  </body>
+</html>

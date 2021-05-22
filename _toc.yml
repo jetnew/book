@@ -18,3 +18,7 @@
 - part: causality
   chapters:
   - file: causal/ci
+
+- part: evolutionary algorithms
+  chapters:
+  - file: evo/ga
