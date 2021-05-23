@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Contrastive Learning &#8212; AI Notes</title>
+    <title>Mutual Information &#8212; AI Notes</title>
     
   <link href="../_static/css/theme.css" rel="stylesheet" />
   <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -53,8 +53,7 @@
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Gaussian Mixture Models with TensorFlow Probability" href="../gen/gmm.html" />
-    <link rel="prev" title="Deep Q Network (DQN)" href="../rl/dqn.html" />
+    <link rel="prev" title="Genetic Algorithm" href="../evo/ga.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -137,9 +136,9 @@
   representation learning
  </span>
 </p>
-<ul class="current nav bd-sidenav">
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../repr/contrastive.html">
    Contrastive Learning
   </a>
  </li>
@@ -185,9 +184,9 @@
   statistics
  </span>
 </p>
-<ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../stats/mi.html">
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
    Mutual Information
   </a>
  </li>
@@ -232,7 +231,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/repr/contrastive.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/stats/mi.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
@@ -252,7 +251,7 @@
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         <a class="issues-button"
-            href="https://github.com/jetnew/book/issues/new?title=Issue%20on%20page%20%2Frepr/contrastive.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/jetnew/book/issues/new?title=Issue%20on%20page%20%2Fstats/mi.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
         
@@ -273,7 +272,7 @@
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/jetnew/book/main?urlpath=tree/docs/repr/contrastive.ipynb"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/jetnew/book/main?urlpath=tree/docs/stats/mi.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="../_static/images/logo_binder.svg"
@@ -290,34 +289,6 @@
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show">
             
-            <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> Contents
-            </div>
-            <nav id="bd-toc-nav">
-                <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#what-is-simclr">
-   What is SimCLR?
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#how-is-similarity-computed">
-   How is similarity computed?
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#what-loss-does-simclr-optimise">
-   What loss does SimCLR optimise?
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#so-what">
-   So what?
-  </a>
- </li>
-</ul>
-
-            </nav>
         </div>
     </div>
 </div>
@@ -326,46 +297,21 @@
         
               <div>
                 
-  <div class="section" id="contrastive-learning">
-<h1>Contrastive Learning<a class="headerlink" href="#contrastive-learning" title="Permalink to this headline">¶</a></h1>
-<p>Contrastive learning is a self-supervised learning method that learns feature representations to distinguish between similar and different samples.</p>
-<p><img alt="image" src="https://lh4.googleusercontent.com/NFYj5oT4MCnqcMSu_asvwqAb1A8rmzZr0jB2SZjMJiOGEz_my3VWcZq_jOGMogc_fwnuFGmXbaHjAa6eugaeauio1uvgR5W9be7tn_Nxo0jXiWGIb-eB9x6km22ZM6kOqIA0YAyr" /></p>
-<p>Source: <a class="reference external" href="https://analyticsindiamag.com/contrastive-learning-self-supervised-ml/">https://analyticsindiamag.com/contrastive-learning-self-supervised-ml/</a></p>
-<p>Contrastive learning can be formulated as a score:</p>
+  <div class="section" id="mutual-information">
+<h1>Mutual Information<a class="headerlink" href="#mutual-information" title="Permalink to this headline">¶</a></h1>
+<p>Mutual information is a measure of the reduction in uncertainty for one variable given a known value of another variable:</p>
 <div class="math notranslate nohighlight">
-\[ score(f(x),f(x^+))&gt;score(f(x),f(x^-)) \]</div>
-<p>where <span class="math notranslate nohighlight">\(x^+\)</span> and <span class="math notranslate nohighlight">\(x^-\)</span> refers to a sample similar and different to <span class="math notranslate nohighlight">\(x\)</span>, respectively.</p>
-<div class="section" id="what-is-simclr">
-<h2>What is SimCLR?<a class="headerlink" href="#what-is-simclr" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference external" href="https://arxiv.org/abs/2002.05709">SimCLR</a> is a contrastive learning framework introduced by Chen et. al that outperforms the previously SOTA supervised learning method on ImageNet when scaling up the architecture.</p>
-<p><img alt="https://amitness.com/images/simclr-general-architecture.png" src="https://amitness.com/images/simclr-general-architecture.png" /></p>
-<p>Source: <a class="reference external" href="https://amitness.com/2020/03/illustrated-simclr/">https://amitness.com/2020/03/illustrated-simclr/</a></p>
-<p>Essentially, SimCLR applies data augmentation on a single image to obtain 2 augmented images, and then optimises by maximising the similarity between the representations of both augmented images.</p>
-</div>
-<div class="section" id="how-is-similarity-computed">
-<h2>How is similarity computed?<a class="headerlink" href="#how-is-similarity-computed" title="Permalink to this headline">¶</a></h2>
-<p>SimCLR applies cosine similarity between the embeddings of images, <span class="math notranslate nohighlight">\(z_i, z_j\)</span>:</p>
+\[I(X,Y)=H(X)-H(X|Y)\]</div>
+<p>where <span class="math notranslate nohighlight">\(I(X,Y)\)</span> is the mutual information for <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span>, <span class="math notranslate nohighlight">\(H(X)\)</span> is the entropy for <span class="math notranslate nohighlight">\(X\)</span>, <span class="math notranslate nohighlight">\(H(X|Y)\)</span> is the conditional entropy for <span class="math notranslate nohighlight">\(X\)</span> given <span class="math notranslate nohighlight">\(Y\)</span>.</p>
+<p>Mutual information is symmetric:</p>
 <div class="math notranslate nohighlight">
-\[ s_{i,j}=\frac{z_i^Tz_j}{(\tau||z_i||||z_j||)} \]</div>
-<p>where \tau is the temperature that scales the range of cosine similarity.</p>
-</div>
-<div class="section" id="what-loss-does-simclr-optimise">
-<h2>What loss does SimCLR optimise?<a class="headerlink" href="#what-loss-does-simclr-optimise" title="Permalink to this headline">¶</a></h2>
-<p>SimCLR uses NT-Xent loss (Normalized Temperature-scaled Cross-entropy loss).</p>
-<p>First, obtain the Noise Contrastive Estimation (NCE) loss:</p>
+\[I(X,Y)=I(Y,X)\]</div>
+<p>Mutual information can be calculated as the KL divergence between the joint distribution and the product of marginal probabilities for each variable:</p>
 <div class="math notranslate nohighlight">
-\[ l(i,j)=-log\frac{exp(s_{i,j})}{\sum_{k=1}^{2N}l_{[k!=i]}exp(s_{i,k})} \]</div>
-<p>Then compute average loss over all pairs in the batch of size N=2:</p>
+\[I(X,Y)=KL(P(X,Y)||P(X)\times P(Y))\]</div>
+<p>Mutual information and information gain are computed equivalently, and therefore MI is sometimes used as as a synonym for information gain:</p>
 <div class="math notranslate nohighlight">
-\[ L=\frac{1}{2N}\sum_{k=1}^N[l(2k-1,2k)+l(2k,2k-1)] \]</div>
-</div>
-<div class="section" id="so-what">
-<h2>So what?<a class="headerlink" href="#so-what" title="Permalink to this headline">¶</a></h2>
-<p>The encoder representations of the image (not the projection head representations) can be used for downstream tasks such as ImageNet classification.</p>
-<p><img alt="https://amitness.com/images/simclr-performance.png" src="https://amitness.com/images/simclr-performance.png" /></p>
-<p>Source: <a class="reference external" href="https://arxiv.org/abs/2002.05709">https://arxiv.org/abs/2002.05709</a></p>
-<p>It is shown that on ImageNet ILSVRC-2012, it achieves 76.5% top-1 accuracy, a 7% improvement over the previous SOTA self-supervised method, <a class="reference external" href="https://arxiv.org/abs/1905.09272">Contrastive Predictive Coding</a>, and comparable with supervised method ResNet50.</p>
-</div>
+\[IG(S,a)=H(S)-H(S|a)\]</div>
 </div>
 
     <script type="text/x-thebe-config">
@@ -381,7 +327,7 @@
         },
         kernelOptions: {
             kernelName: "book",
-            path: "./repr"
+            path: "./stats"
         },
         predefinedOutput: true
     }
@@ -393,8 +339,7 @@
         
         <div class='prev-next-bottom'>
             
-    <a class='left-prev' id="prev-link" href="../rl/dqn.html" title="previous page">Deep Q Network (DQN)</a>
-    <a class='right-next' id="next-link" href="../gen/gmm.html" title="next page">Gaussian Mixture Models with TensorFlow Probability</a>
+    <a class='left-prev' id="prev-link" href="../evo/ga.html" title="previous page">Genetic Algorithm</a>
 
         </div>
         
