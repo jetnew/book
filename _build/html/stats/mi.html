@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Deep Q Network (DQN) &#8212; AI Notes</title>
+    <title>Mutual Information &#8212; AI Notes</title>
     
   <link href="../_static/css/theme.css" rel="stylesheet" />
   <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -49,10 +49,11 @@
         const thebe_selector_output = ".output"
     </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Contrastive Learning" href="../repr/contrastive.html" />
-    <link rel="prev" title="Resume" href="../about/resume.html" />
+    <link rel="prev" title="Genetic Algorithm" href="../evo/ga.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -123,9 +124,9 @@
   reinforcement learning
  </span>
 </p>
-<ul class="current nav bd-sidenav">
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../rl/dqn.html">
    Deep Q Network (DQN)
   </a>
  </li>
@@ -183,9 +184,9 @@
   statistics
  </span>
 </p>
-<ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../stats/mi.html">
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
    Mutual Information
   </a>
  </li>
@@ -230,9 +231,9 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/rl/dqn.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/stats/mi.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.md</button></a>
+                data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
             onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
@@ -250,7 +251,7 @@
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         <a class="issues-button"
-            href="https://github.com/jetnew/book/issues/new?title=Issue%20on%20page%20%2Frl/dqn.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/jetnew/book/issues/new?title=Issue%20on%20page%20%2Fstats/mi.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
         
@@ -266,6 +267,23 @@
 
             <!-- Launch buttons -->
 
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/jetnew/book/main?urlpath=tree/docs/stats/mi.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
         </div>
 
         <!-- Table of contents -->
@@ -279,9 +297,21 @@
         
               <div>
                 
-  <div class="section" id="deep-q-network-dqn">
-<h1>Deep Q Network (DQN)<a class="headerlink" href="#deep-q-network-dqn" title="Permalink to this headline">¶</a></h1>
-<p>DQN is a reinforcement learning algorithm.</p>
+  <div class="section" id="mutual-information">
+<h1>Mutual Information<a class="headerlink" href="#mutual-information" title="Permalink to this headline">¶</a></h1>
+<p>Mutual information is a measure of the reduction in uncertainty for one variable given a known value of another variable:</p>
+<div class="math notranslate nohighlight">
+\[I(X,Y)=H(X)-H(X|Y)\]</div>
+<p>where <span class="math notranslate nohighlight">\(I(X,Y)\)</span> is the mutual information for <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span>, <span class="math notranslate nohighlight">\(H(X)\)</span> is the entropy for <span class="math notranslate nohighlight">\(X\)</span>, <span class="math notranslate nohighlight">\(H(X|Y)\)</span> is the conditional entropy for <span class="math notranslate nohighlight">\(X\)</span> given <span class="math notranslate nohighlight">\(Y\)</span>.</p>
+<p>Mutual information is symmetric:</p>
+<div class="math notranslate nohighlight">
+\[I(X,Y)=I(Y,X)\]</div>
+<p>Mutual information can be calculated as the KL divergence between the joint distribution and the product of marginal probabilities for each variable:</p>
+<div class="math notranslate nohighlight">
+\[I(X,Y)=KL(P(X,Y)||P(X)\times P(Y))\]</div>
+<p>Mutual information and information gain are computed equivalently, and therefore MI is sometimes used as as a synonym for information gain:</p>
+<div class="math notranslate nohighlight">
+\[IG(S,a)=H(S)-H(S|a)\]</div>
 </div>
 
     <script type="text/x-thebe-config">
@@ -293,24 +323,23 @@
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "python"
+            mode: "book"
         },
         kernelOptions: {
-            kernelName: "python3",
-            path: "./rl"
+            kernelName: "book",
+            path: "./stats"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'python3'</script>
+    <script>kernelName = 'book'</script>
 
               </div>
               
         
         <div class='prev-next-bottom'>
             
-    <a class='left-prev' id="prev-link" href="../about/resume.html" title="previous page">Resume</a>
-    <a class='right-next' id="next-link" href="../repr/contrastive.html" title="next page">Contrastive Learning</a>
+    <a class='left-prev' id="prev-link" href="../evo/ga.html" title="previous page">Genetic Algorithm</a>
 
         </div>
         

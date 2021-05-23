@@ -11,6 +11,10 @@
   chapters:
   - file: rl/dqn
 
+- part: representation learning
+  chapters:
+  - file: repr/contrastive
+
 - part: generative model
   chapters:
   - file: gen/gmm
@@ -22,3 +26,7 @@
 - part: evolutionary algorithms
   chapters:
   - file: evo/ga
+
+- part: statistics
+  chapters:
+  - file: stats/mi
