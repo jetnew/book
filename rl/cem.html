@@ -49,6 +49,8 @@
         const thebe_selector_output = ".output"
     </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Contrastive Learning" href="../repr/contrastive.html" />
@@ -293,6 +295,19 @@
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show">
             
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#cem-algorithm">
+   CEM Algorithm
+  </a>
+ </li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -303,7 +318,16 @@
                 
   <div class="section" id="cross-entropy-method">
 <h1>Cross Entropy Method<a class="headerlink" href="#cross-entropy-method" title="Permalink to this headline">¶</a></h1>
-<p>The Cross Entropy Method (CEM) is a gradient free method of optimization commonly used for planning in model-based reinforcement learning.</p>
+<p>The Cross Entropy Method (CEM) is a gradient-free method of optimization commonly used for planning in model-based reinforcement learning.</p>
+<div class="section" id="cem-algorithm">
+<h2>CEM Algorithm<a class="headerlink" href="#cem-algorithm" title="Permalink to this headline">¶</a></h2>
+<ol class="simple">
+<li><p>Create a Gaussian distribution <span class="math notranslate nohighlight">\(N(\mu,\sigma)\)</span> that describes the weights <span class="math notranslate nohighlight">\(\theta\)</span> of the neural network.</p></li>
+<li><p>Sample <span class="math notranslate nohighlight">\(N\)</span> batch samples of <span class="math notranslate nohighlight">\(\theta\)</span> from the Gaussian.</p></li>
+<li><p>Evaluate all <span class="math notranslate nohighlight">\(N\)</span> samples of <span class="math notranslate nohighlight">\(\theta\)</span> using the value function, e.g. running trials.</p></li>
+<li><p>Select the top % of the samples of <span class="math notranslate nohighlight">\(\theta\)</span> and compute the new <span class="math notranslate nohighlight">\(\mu\)</span> and <span class="math notranslate nohighlight">\(\sigma\)</span> to parameterise the new Gaussian distribution.</p></li>
+<li><p>Repeat steps 1-4 until convergence.</p></li>
+</ol>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -371,30 +395,32 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[31.0, 10.0, 10.0, 10.0, 10.0, 10.0, 9.0, 9.0, 9.0, 10.0]
-[21.0, 10.0, 10.0, 10.0, 10.0, 15.0, 31.0, 10.0, 15.0, 10.0]
-[9.0, 70.0, 9.0, 9.0, 28.0, 10.0, 15.0, 9.0, 16.0, 12.0]
-[55.0, 39.0, 16.0, 20.0, 27.0, 34.0, 26.0, 11.0, 34.0, 33.0]
-[107.0, 59.0, 19.0, 59.0, 54.0, 53.0, 40.0, 47.0, 35.0, 34.0]
-[55.0, 10.0, 57.0, 169.0, 47.0, 42.0, 65.0, 23.0, 45.0, 89.0]
-[24.0, 46.0, 76.0, 106.0, 97.0, 42.0, 60.0, 65.0, 60.0, 36.0]
-[39.0, 61.0, 95.0, 38.0, 56.0, 38.0, 60.0, 48.0, 60.0, 49.0]
-[162.0, 74.0, 55.0, 85.0, 84.0, 86.0, 81.0, 82.0, 38.0, 60.0]
-[77.0, 200.0, 82.0, 86.0, 200.0, 78.0, 200.0, 200.0, 200.0, 200.0]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[9.0, 14.0, 171.0, 11.0, 8.0, 11.0, 9.0, 9.0, 9.0, 11.0]
+[9.0, 10.0, 12.0, 19.0, 18.0, 9.0, 10.0, 10.0, 9.0, 10.0]
+[10.0, 56.0, 24.0, 12.0, 10.0, 17.0, 50.0, 19.0, 9.0, 88.0]
+[103.0, 18.0, 10.0, 44.0, 56.0, 71.0, 116.0, 192.0, 23.0, 18.0]
+[17.0, 10.0, 60.0, 17.0, 64.0, 101.0, 63.0, 127.0, 45.0, 200.0]
+[79.0, 200.0, 146.0, 79.0, 123.0, 94.0, 110.0, 95.0, 200.0, 141.0]
+[154.0, 124.0, 147.0, 200.0, 200.0, 107.0, 10.0, 118.0, 185.0, 159.0]
+[120.0, 200.0, 135.0, 200.0, 175.0, 172.0, 158.0, 200.0, 112.0, 173.0]
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[135.0, 117.0, 82.0, 200.0, 200.0, 200.0, 158.0, 192.0, 200.0, 112.0]
-[120.0, 200.0, 200.0, 143.0, 200.0, 200.0, 200.0, 148.0, 200.0, 135.0]
-[200.0, 200.0, 113.0, 200.0, 200.0, 200.0, 200.0, 200.0, 200.0, 183.0]
-[200.0, 144.0, 119.0, 97.0, 200.0, 101.0, 200.0, 200.0, 200.0, 131.0]
-[200.0, 200.0, 200.0, 200.0, 200.0, 131.0, 200.0, 119.0, 200.0, 200.0]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[200.0, 200.0, 166.0, 200.0, 153.0, 200.0, 200.0, 146.0, 173.0, 157.0]
+[200.0, 200.0, 200.0, 148.0, 139.0, 200.0, 200.0, 200.0, 200.0, 200.0]
+[200.0, 200.0, 200.0, 200.0, 200.0, 200.0, 200.0, 135.0, 200.0, 200.0]
+[200.0, 200.0, 200.0, 200.0, 200.0, 200.0, 200.0, 200.0, 200.0, 200.0]
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[200.0, 200.0, 129.0, 200.0, 200.0, 200.0, 200.0, 200.0, 200.0, 200.0]
-[200.0, 200.0, 105.0, 200.0, 200.0, 124.0, 200.0, 200.0, 95.0, 109.0]
-[200.0, 200.0, 200.0, 179.0, 200.0, 200.0, 101.0, 111.0, 200.0, 200.0]
-[149.0, 113.0, 200.0, 111.0, 200.0, 200.0, 200.0, 200.0, 124.0, 132.0]
-[115.0, 200.0, 116.0, 131.0, 152.0, 200.0, 200.0, 120.0, 138.0, 132.0]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[200.0, 200.0, 200.0, 200.0, 200.0, 200.0, 200.0, 200.0, 200.0, 200.0]
+[200.0, 200.0, 200.0, 158.0, 200.0, 200.0, 200.0, 200.0, 200.0, 200.0]
+[200.0, 200.0, 200.0, 200.0, 200.0, 200.0, 200.0, 200.0, 200.0, 200.0]
+[190.0, 200.0, 200.0, 200.0, 200.0, 200.0, 200.0, 200.0, 200.0, 200.0]
+[200.0, 200.0, 200.0, 198.0, 200.0, 200.0, 200.0, 200.0, 200.0, 200.0]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[200.0, 200.0, 200.0, 200.0, 200.0, 200.0, 154.0, 200.0, 200.0, 200.0]
+[160.0, 200.0, 152.0, 200.0, 200.0, 184.0, 200.0, 200.0, 200.0, 200.0]
+[200.0, 200.0, 200.0, 155.0, 200.0, 200.0, 200.0, 200.0, 200.0, 200.0]
 </pre></div>
 </div>
 </div>
@@ -406,16 +432,16 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([[ 0.50478351,  0.14675146],
-        [-0.26238035, -0.39782852],
-        [-0.28874813,  2.0017665 ],
-        [-1.55790972,  0.14308773],
-        [-0.74419092, -0.82806527]]),
- array([[1.46764884e-02, 2.65073203e-04],
-        [6.07247094e-03, 4.69881870e-04],
-        [7.75126331e-04, 6.34060998e-03],
-        [3.53886488e-04, 4.59674231e-05],
-        [2.07733184e-04, 7.09023590e-05]]))
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([[-0.11821937,  1.11676868],
+        [ 0.09901553,  0.45036112],
+        [-2.97444141, -0.23701256],
+        [-1.73634153,  0.57017697],
+        [-0.19144452, -0.17093318]]),
+ array([[1.42739229e-05, 1.86332148e-03],
+        [5.34361793e-04, 3.28702236e-03],
+        [8.75532958e-03, 2.95089964e-05],
+        [4.23350459e-03, 5.81455890e-04],
+        [9.62906781e-04, 1.77739344e-04]]))
 </pre></div>
 </div>
 </div>
@@ -436,6 +462,7 @@
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>200.0
 </pre></div>
+</div>
 </div>
 </div>
 </div>
