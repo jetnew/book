@@ -409,8 +409,8 @@
 <ol class="simple">
 <li><p>Given image <span class="math notranslate nohighlight">\(x\)</span>, augment and obtain the 2 views’ image features <span class="math notranslate nohighlight">\(z_t, z_s\)</span>.</p></li>
 <li><p>Match image features <span class="math notranslate nohighlight">\(z_t, z_s\)</span> to prototypes <span class="math notranslate nohighlight">\(\{c_1,...,c_k\}\)</span> to compute codes <span class="math notranslate nohighlight">\(q_t,q_s\)</span>.</p></li>
-<li><p>Set up the “swapped” prediction problem with the loss function: $<span class="math notranslate nohighlight">\( L(z_t,z_s)= l(z_t,q_s) + l(z_s,q_t) \)</span><span class="math notranslate nohighlight">\( where \)</span>l(z,q) = \sum_k q_s^{(k)}log,p_t^{(k)}<span class="math notranslate nohighlight">\( measures fit between features \)</span>z<span class="math notranslate nohighlight">\( and code \)</span>q<span class="math notranslate nohighlight">\(, where \)</span>p_t^{(k)} = \frac{exp(\frac{1}{\tau}z_t^\intercal c_k)}{\sum_{k’}exp(\frac{1}{\tau}z_t^\intercal c_{k’})}$.</p></li>
-<li><p>Taking this loss over all images and pairs of data augmentations lead to: $<span class="math notranslate nohighlight">\( -\frac{1}{N}\sum_{n=1}^N \sum_{s,t\sim T} [\frac{1}{\tau}z_{nt}^\intercal Cq_{ns} + \frac{1}{\tau}z_{ns}^\intercal Cq_{nt} - log\sum_{k=1}^K exp(\frac{z_{nt}^\intercal}{\tau}) - log\sum_{k=1}^K exp(\frac{z_{ns}^\intercal}{\tau})] \)</span>$</p></li>
+<li><p>Set up the “swapped” prediction problem with the loss function: <span class="math notranslate nohighlight">\( L(z_t,z_s)= l(z_t,q_s) + l(z_s,q_t) \)</span> where <span class="math notranslate nohighlight">\(l(z,q) = \sum_k q_s^{(k)}log\,p_t^{(k)}\)</span> measures fit between features <span class="math notranslate nohighlight">\(z\)</span> and code <span class="math notranslate nohighlight">\(q\)</span>, where <span class="math notranslate nohighlight">\(p_t^{(k)} = \frac{exp(\frac{1}{\tau}z_t^\intercal c_k)}{\sum_{k'}exp(\frac{1}{\tau}z_t^\intercal c_{k'})}\)</span>.</p></li>
+<li><p>Taking this loss over all images and pairs of data augmentations lead to: <span class="math notranslate nohighlight">\( -\frac{1}{N}\sum_{n=1}^N \sum_{s,t\sim T} [\frac{1}{\tau}z_{nt}^\intercal Cq_{ns} + \frac{1}{\tau}z_{ns}^\intercal Cq_{nt} - log\sum_{k=1}^K exp(\frac{z_{nt}^\intercal}{\tau}) - log\sum_{k=1}^K exp(\frac{z_{ns}^\intercal}{\tau})] \)</span></p></li>
 <li><p>This loss is minimized with respect to prototypes <span class="math notranslate nohighlight">\(C\)</span> and parameters <span class="math notranslate nohighlight">\(\theta\)</span> of image encoder <span class="math notranslate nohighlight">\(f_\theta\)</span>.</p></li>
 </ol>
 </div>
@@ -419,7 +419,7 @@
 <p>SwAV clusters instances to the prototypes <span class="math notranslate nohighlight">\(C\)</span>, and compute codes using prototypes <span class="math notranslate nohighlight">\(C\)</span> such that all instances are equally partitioned by the prototypes.</p>
 <ol class="simple">
 <li><p>Given image features <span class="math notranslate nohighlight">\(Z = [z_1,...,z_B]\)</span>, map them to prototypes <span class="math notranslate nohighlight">\(C = [c_1,...,c_k]\)</span>, where the mapping (codes) is denoted by <span class="math notranslate nohighlight">\(Q = [q_1,...,q_B]\)</span>.</p></li>
-<li><p><span class="math notranslate nohighlight">\(Q\)</span> is optimized to maximized similarity between features and prototypes using $<span class="math notranslate nohighlight">\( max_{Q\in \mathcal{Q}} Tr(Q^\intercal C^\intercal Z) + \varepsilon H(Q) \)</span><span class="math notranslate nohighlight">\( where \)</span>H(Q) = -\sum_{i,j}Q_{ij}log,Q_{ij}$ is the entropy function.</p></li>
+<li><p><span class="math notranslate nohighlight">\(Q\)</span> is optimized to maximized similarity between features and prototypes using <span class="math notranslate nohighlight">\( max_{Q\in \mathcal{Q}} Tr(Q^\intercal C^\intercal Z) + \varepsilon H(Q) \)</span> where <span class="math notranslate nohighlight">\(H(Q) = -\sum_{i,j}Q_{ij}log\,Q_{ij}\)</span> is the entropy function.</p></li>
 <li><p><span class="math notranslate nohighlight">\(C^\intercal Z = \begin{bmatrix} c_1 \\ c_2 \end{bmatrix} \begin{bmatrix} z_1 &amp; z_2 &amp; z_3 \end{bmatrix} = \begin{bmatrix} c_1z_1 &amp; c_1z_2 &amp; c_1z_3 \\ c_2z_1 &amp; c_2z_2 &amp; c_2z_3 \end{bmatrix}\)</span></p></li>
 <li><p><span class="math notranslate nohighlight">\(Tr(\begin{bmatrix} q_{11} &amp; q_{21} \\ q_{12} &amp; q_{22} \\ q_{13} &amp; q_{23} \end{bmatrix}\begin{bmatrix} C^\intercal Z \end{bmatrix}) = q_{11}c_1z_1 + q_{21}c_2z_1 + q_{12}c_1z_2 + q_{22}c_2z_2 + q_{13}c_1z_3 + q_{23}c_3z_3\)</span></p></li>
 <li><p><span class="math notranslate nohighlight">\(Q\)</span> is a range of continuous values between 0 and 1. <span class="math notranslate nohighlight">\(Q\)</span> is 0 for the general case and close to 1 when a <span class="math notranslate nohighlight">\(z\)</span> representation is close to its prototype vector <span class="math notranslate nohighlight">\(C\)</span>. This is because optimizing <span class="math notranslate nohighlight">\(Q\)</span> to maximise the trace <span class="math notranslate nohighlight">\(Tr(Q^\intercal C^\intercal Z)\)</span> results in the dot products where <span class="math notranslate nohighlight">\(c\)</span> and <span class="math notranslate nohighlight">\(z\)</span> are close together will take a bigger value. The values of <span class="math notranslate nohighlight">\(q\)</span> will try to be maximised.</p></li>
@@ -437,9 +437,9 @@
 <li><p>Let <span class="math notranslate nohighlight">\(c = (4,2,6,4,4)\)</span>, the amount of each dessert available (m-dimensional).</p></li>
 <li><p>Let <span class="math notranslate nohighlight">\(U(r,c)=\{P\in \mathbb{R}_{&gt;0}^{n\times m} |P\textbf{1}_m=r, P^\intercal\textbf{1}_n=c \}\)</span> be the set of positive <span class="math notranslate nohighlight">\(n\times m\)</span> matrices for which rows sum to <span class="math notranslate nohighlight">\(r\)</span> and columns sum to <span class="math notranslate nohighlight">\(c\)</span>, which is the set of ways of allocating desserts to the people.</p></li>
 <li><p>Let <span class="math notranslate nohighlight">\(M\)</span> be the <span class="math notranslate nohighlight">\((n\times m)\)</span> cost (negative preference) matrix.</p></li>
-<li><p>The optimal transport problem is formally posed as $<span class="math notranslate nohighlight">\(d_M(r,c) = min_{P\in U(r,c)} \sum_{i,j} P_{ij}M_{ij}\)</span><span class="math notranslate nohighlight">\( the optimal transport between \)</span>r<span class="math notranslate nohighlight">\( and \)</span>c$.</p></li>
-<li><p>The Sinkhorn distance is $<span class="math notranslate nohighlight">\(d_M(r,c) = min_{P\in U(r,c)} \sum_{i,j} P_{ij}M_{ij}-\frac{1}{\lambda}h(P)\)</span><span class="math notranslate nohighlight">\( where \)</span>h(P)=-\sum_{i,j}P_{ij}<span class="math notranslate nohighlight">\( is the information entropy of \)</span>P$ that acts as regularization.</p></li>
-<li><p>The Sinkhorn-Knopp algorithm is an efficient method to obtain the optimal distribution matrix <span class="math notranslate nohighlight">\(P_\lambda^*\)</span> and the associated <span class="math notranslate nohighlight">\(d_M^\lambda(r,c)\)</span> based on the fact that elements of the optimal matrix are of the form $<span class="math notranslate nohighlight">\( (P_\lambda^*)_{ij} = \alpha_i\beta_je^{-\lambda M_{ij}}\)</span><span class="math notranslate nohighlight">\( with \)</span>\alpha_1,…,\alpha_n<span class="math notranslate nohighlight">\( and \)</span>\beta_1,…,\beta_n<span class="math notranslate nohighlight">\( are constants to ensure rows and columns sum to \)</span>r<span class="math notranslate nohighlight">\( and \)</span>c$ respectively.</p></li>
+<li><p>The optimal transport problem is formally posed as <span class="math notranslate nohighlight">\(d_M(r,c) = min_{P\in U(r,c)} \sum_{i,j} P_{ij}M_{ij}\)</span> the optimal transport between <span class="math notranslate nohighlight">\(r\)</span> and <span class="math notranslate nohighlight">\(c\)</span>.</p></li>
+<li><p>The Sinkhorn distance is <span class="math notranslate nohighlight">\(d_M(r,c) = min_{P\in U(r,c)} \sum_{i,j} P_{ij}M_{ij}-\frac{1}{\lambda}h(P)\)</span> where <span class="math notranslate nohighlight">\(h(P)=-\sum_{i,j}P_{ij}\)</span> is the information entropy of <span class="math notranslate nohighlight">\(P\)</span> that acts as regularization.</p></li>
+<li><p>The Sinkhorn-Knopp algorithm is an efficient method to obtain the optimal distribution matrix <span class="math notranslate nohighlight">\(P_\lambda^*\)</span> and the associated <span class="math notranslate nohighlight">\(d_M^\lambda(r,c)\)</span> based on the fact that elements of the optimal matrix are of the form <span class="math notranslate nohighlight">\( (P_\lambda^*)_{ij} = \alpha_i\beta_je^{-\lambda M_{ij}}\)</span> with <span class="math notranslate nohighlight">\(\alpha_1,...,\alpha_n\)</span> and <span class="math notranslate nohighlight">\(\beta_1,...,\beta_n\)</span> are constants to ensure rows and columns sum to <span class="math notranslate nohighlight">\(r\)</span> and <span class="math notranslate nohighlight">\(c\)</span> respectively.</p></li>
 <li><p>The Sinkhorn-Knopp algorithm is basically</p></li>
 <li><p>Initialise <span class="math notranslate nohighlight">\(P_\lambda = e^{-\lambda M}\)</span>.</p></li>
 <li><p>Repeat 3-4 until convergence:</p></li>
@@ -466,20 +466,6 @@
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">baa1a268ac62</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="ne">----&gt; </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> 
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>  <span class="c1"># amount each of the 7 people can eat</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span>  <span class="c1"># portions of the 5 desserts available</span>
-
-<span class="ne">ModuleNotFoundError</span>: No module named &#39;pandas&#39;
-</pre></div>
-</div>
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -487,16 +473,16 @@
 <span class="sd">Sinkhorn-Knopp Algorithm</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="k">def</span> <span class="nf">sinkhorn_knopp</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">lam</span><span class="p">):</span>
-  <span class="n">n</span><span class="p">,</span> <span class="n">m</span> <span class="o">=</span> <span class="n">M</span><span class="o">.</span><span class="n">shape</span>
-  <span class="n">P</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span> <span class="n">lam</span> <span class="o">*</span> <span class="n">M</span><span class="p">)</span>
-  <span class="n">P</span> <span class="o">/=</span> <span class="n">P</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-  <span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="n">n</span><span class="p">,</span> <span class="n">m</span> <span class="o">=</span> <span class="n">M</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">P</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span> <span class="n">lam</span> <span class="o">*</span> <span class="n">M</span><span class="p">)</span>
+    <span class="n">P</span> <span class="o">/=</span> <span class="n">P</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
 
-  <span class="k">while</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">u</span> <span class="o">-</span> <span class="n">P</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">)))</span> <span class="o">&gt;</span> <span class="mf">1e-8</span><span class="p">:</span>  
-    <span class="n">u</span> <span class="o">=</span> <span class="n">P</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">P</span> <span class="o">*=</span> <span class="p">(</span><span class="n">r</span> <span class="o">/</span> <span class="n">u</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
-    <span class="n">P</span> <span class="o">*=</span> <span class="p">(</span><span class="n">c</span> <span class="o">/</span> <span class="n">P</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
-  <span class="k">return</span> <span class="n">P</span>
+    <span class="k">while</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">u</span> <span class="o">-</span> <span class="n">P</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">)))</span> <span class="o">&gt;</span> <span class="mf">1e-8</span><span class="p">:</span>  
+        <span class="n">u</span> <span class="o">=</span> <span class="n">P</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">P</span> <span class="o">*=</span> <span class="p">(</span><span class="n">r</span> <span class="o">/</span> <span class="n">u</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+        <span class="n">P</span> <span class="o">*=</span> <span class="p">(</span><span class="n">c</span> <span class="o">/</span> <span class="n">P</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">P</span>
 </pre></div>
 </div>
 </div>
@@ -511,7 +497,17 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/swav_7_0.png" src="../_images/swav_7_0.png" />
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">3</span><span class="o">-</span><span class="mi">504</span><span class="n">be03eebbf</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> 
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">P</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">stacked</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="ne">----&gt; </span><span class="mi">4</span> <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="ne">NameError</span>: name &#39;plt&#39; is not defined
+</pre></div>
+</div>
+<img alt="../_images/swav_7_1.png" src="../_images/swav_7_1.png" />
 </div>
 </div>
 </div>
