@@ -1,0 +1,580 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Notes on SwAV &#8212; AI Notes</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet" />
+  <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.acff12b8f9c144ce68a297486a2fa670.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Gaussian Mixture Models with TensorFlow Probability" href="../gen/gmm.html" />
+    <link rel="prev" title="Contrastive Learning" href="contrastive.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+      <img src="../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">AI Notes</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro.html">
+   AI Notes
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  about
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../about/about.html">
+   About me
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../about/projects.html">
+     Projects
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../about/resume.html">
+     Resume
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  reinforcement learning
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../rl/dqn.html">
+   Deep Q Network (DQN)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../rl/cem.html">
+   Cross Entropy Method
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  representation learning
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="contrastive.html">
+   Contrastive Learning
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Notes on SwAV
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  generative model
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../gen/gmm.html">
+   Gaussian Mixture Models with TensorFlow Probability
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  causality
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../causal/ci.html">
+   Causal Inference
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  evolutionary algorithms
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../evo/ga.html">
+   Genetic Algorithm
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  statistics
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../stats/mi.html">
+   Mutual Information
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/repr/swav.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/jetnew/book"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/jetnew/book/issues/new?title=Issue%20on%20page%20%2Frepr/swav.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/jetnew/book/main?urlpath=tree/docs/repr/swav.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Notes on SwAV
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#content">
+     Content
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#why-swav">
+   Why SwAV?
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#about">
+     About
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#motive">
+     Motive
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#swav-loss">
+   SwAV Loss
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#swav-computing-codes-online">
+   SwAV Computing Codes Online
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#sinkhorn-knopp-algorithm">
+   Sinkhorn-Knopp Algorithm
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#why-swav-works">
+   Why SwAV Works
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="notes-on-swav">
+<h1>Notes on SwAV<a class="headerlink" href="#notes-on-swav" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="content">
+<h2>Content<a class="headerlink" href="#content" title="Permalink to this headline">¶</a></h2>
+<ol class="simple">
+<li><p>Why SwAV?</p></li>
+<li><p>SwAV Loss</p></li>
+<li><p>SwAV Computing Codes Online</p></li>
+<li><p>Sinkhorn-Knopp Algorithm</p></li>
+<li><p>Why SwAV Works</p></li>
+</ol>
+</div>
+</div>
+<div class="section" id="why-swav">
+<h1>Why SwAV?<a class="headerlink" href="#why-swav" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="about">
+<h2>About<a class="headerlink" href="#about" title="Permalink to this headline">¶</a></h2>
+<ol class="simple">
+<li><p>SwAV (<strong>S</strong>wapping <strong>A</strong>ssignments between multiple <strong>Views</strong> of the same image) is introduced in Unsupervised Learning of Visual Features by Contrasting Cluster Assignments (Caron et al. NeurIPS 2021).</p></li>
+<li><p>SwAV achieves 75.3% top-1 accuracy on ImageNet with ResNet-50 for linear models trained on frozen features, which is only 1.2% difference from the supervised method (76.5%), closing the gap between unsupervised and supervised learning representation of visual features.</p></li>
+<li><p>SwAV is an unsupervised contrastive learning method that simultaneously clusters the data while enforcing consistency between cluster assignments produced for different augmentations (or “views”) of the same image, and uses a “swapped” prediction mechanism by predicting the code of a view from the representation of another view.</p></li>
+<li><p>SwAV can be trained with large and small batches and can scale to unlimited amounts of data. SwAV also does not require a large memory bank or a special momentum network, therefore is more memory efficient than previous contrastive methods.</p></li>
+<li><p>SwAV also introduces a new augmentation “multi-crop” that increases the number of views with no computational or memory overhead.</p></li>
+</ol>
+</div>
+<div class="section" id="motive">
+<h2>Motive<a class="headerlink" href="#motive" title="Permalink to this headline">¶</a></h2>
+<ol class="simple">
+<li><p>Recent contrastive learning methods for unsupervised visual representation learning uses:</p></li>
+<li><p>A contrastive loss that compares pairs of images to push away semantically different images while pulling together semantically similar images</p></li>
+<li><p>Image augmentations that define invariances encoded in the features.</p></li>
+<li><p>Instance discrimination (contrasting instances of image views) is not practical for all pairwise comparisons on a large dataset. Clustering-based methods thus approximate task by discriminating between clusters images with similar features instead of individual images.</p></li>
+<li><p>However, current clustering-based methods are computationally inefficient.</p></li>
+<li><p>Therefore, SwAV proposes a scalable, online clustering-based method, and a “swapped” prediction problem to learn visual features.</p></li>
+</ol>
+<p>Reference: <a class="reference external" href="https://arxiv.org/abs/2006.09882">Unsupervised Learning of Visual Features by Contrasting Cluster Assignments</a> (Caron et al. NeurIPS 2021)</p>
+</div>
+</div>
+<div class="section" id="swav-loss">
+<h1>SwAV Loss<a class="headerlink" href="#swav-loss" title="Permalink to this headline">¶</a></h1>
+<p>SwAV can be interpreted as contrasting between multiple images views by comparing cluster assignments instead of their features. SwAV does this by computing a code from one view and predicting that code from the other view.</p>
+<ol class="simple">
+<li><p>Given image <span class="math notranslate nohighlight">\(x\)</span>, augment and obtain the 2 views’ image features <span class="math notranslate nohighlight">\(z_t, z_s\)</span>.</p></li>
+<li><p>Match image features <span class="math notranslate nohighlight">\(z_t, z_s\)</span> to prototypes <span class="math notranslate nohighlight">\(\{c_1,...,c_k\}\)</span> to compute codes <span class="math notranslate nohighlight">\(q_t,q_s\)</span>.</p></li>
+<li><p>Set up the “swapped” prediction problem with the loss function: $<span class="math notranslate nohighlight">\( L(z_t,z_s)= l(z_t,q_s) + l(z_s,q_t) \)</span><span class="math notranslate nohighlight">\( where \)</span>l(z,q) = \sum_k q_s^{(k)}log,p_t^{(k)}<span class="math notranslate nohighlight">\( measures fit between features \)</span>z<span class="math notranslate nohighlight">\( and code \)</span>q<span class="math notranslate nohighlight">\(, where \)</span>p_t^{(k)} = \frac{exp(\frac{1}{\tau}z_t^\intercal c_k)}{\sum_{k’}exp(\frac{1}{\tau}z_t^\intercal c_{k’})}$.</p></li>
+<li><p>Taking this loss over all images and pairs of data augmentations lead to: $<span class="math notranslate nohighlight">\( -\frac{1}{N}\sum_{n=1}^N \sum_{s,t\sim T} [\frac{1}{\tau}z_{nt}^\intercal Cq_{ns} + \frac{1}{\tau}z_{ns}^\intercal Cq_{nt} - log\sum_{k=1}^K exp(\frac{z_{nt}^\intercal}{\tau}) - log\sum_{k=1}^K exp(\frac{z_{ns}^\intercal}{\tau})] \)</span>$</p></li>
+<li><p>This loss is minimized with respect to prototypes <span class="math notranslate nohighlight">\(C\)</span> and parameters <span class="math notranslate nohighlight">\(\theta\)</span> of image encoder <span class="math notranslate nohighlight">\(f_\theta\)</span>.</p></li>
+</ol>
+</div>
+<div class="section" id="swav-computing-codes-online">
+<h1>SwAV Computing Codes Online<a class="headerlink" href="#swav-computing-codes-online" title="Permalink to this headline">¶</a></h1>
+<p>SwAV clusters instances to the prototypes <span class="math notranslate nohighlight">\(C\)</span>, and compute codes using prototypes <span class="math notranslate nohighlight">\(C\)</span> such that all instances are equally partitioned by the prototypes.</p>
+<ol class="simple">
+<li><p>Given image features <span class="math notranslate nohighlight">\(Z = [z_1,...,z_B]\)</span>, map them to prototypes <span class="math notranslate nohighlight">\(C = [c_1,...,c_k]\)</span>, where the mapping (codes) is denoted by <span class="math notranslate nohighlight">\(Q = [q_1,...,q_B]\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(Q\)</span> is optimized to maximized similarity between features and prototypes using $<span class="math notranslate nohighlight">\( max_{Q\in \mathcal{Q}} Tr(Q^\intercal C^\intercal Z) + \varepsilon H(Q) \)</span><span class="math notranslate nohighlight">\( where \)</span>H(Q) = -\sum_{i,j}Q_{ij}log,Q_{ij}$ is the entropy function.</p></li>
+<li><p><span class="math notranslate nohighlight">\(C^\intercal Z = \begin{bmatrix} c_1 \\ c_2 \end{bmatrix} \begin{bmatrix} z_1 &amp; z_2 &amp; z_3 \end{bmatrix} = \begin{bmatrix} c_1z_1 &amp; c_1z_2 &amp; c_1z_3 \\ c_2z_1 &amp; c_2z_2 &amp; c_2z_3 \end{bmatrix}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(Tr(\begin{bmatrix} q_{11} &amp; q_{21} \\ q_{12} &amp; q_{22} \\ q_{13} &amp; q_{23} \end{bmatrix}\begin{bmatrix} C^\intercal Z \end{bmatrix}) = q_{11}c_1z_1 + q_{21}c_2z_1 + q_{12}c_1z_2 + q_{22}c_2z_2 + q_{13}c_1z_3 + q_{23}c_3z_3\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(Q\)</span> is a range of continuous values between 0 and 1. <span class="math notranslate nohighlight">\(Q\)</span> is 0 for the general case and close to 1 when a <span class="math notranslate nohighlight">\(z\)</span> representation is close to its prototype vector <span class="math notranslate nohighlight">\(C\)</span>. This is because optimizing <span class="math notranslate nohighlight">\(Q\)</span> to maximise the trace <span class="math notranslate nohighlight">\(Tr(Q^\intercal C^\intercal Z)\)</span> results in the dot products where <span class="math notranslate nohighlight">\(c\)</span> and <span class="math notranslate nohighlight">\(z\)</span> are close together will take a bigger value. The values of <span class="math notranslate nohighlight">\(q\)</span> will try to be maximised.</p></li>
+<li><p>However, the maximization of values of <span class="math notranslate nohighlight">\(q\)</span> are regularized by <span class="math notranslate nohighlight">\(H(Q) = -\sum_{i,j}Q_{ij}log\,Q_{ij}\)</span>. The closer <span class="math notranslate nohighlight">\(q_{ij}\)</span> is to 0, the bigger the <span class="math notranslate nohighlight">\(log\,Q_{ij}\)</span> value will be, and the maximum of <span class="math notranslate nohighlight">\(Q_{ij}log\,Q_{ij}\)</span> will be in the middle of 0 and 1. A higher entropy will give a more homogenous distribution of <span class="math notranslate nohighlight">\(Q\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(Q\)</span> is optimized using the Sinkhorn-Knopp algorithm.</p></li>
+</ol>
+<p>Reference: <a class="reference external" href="https://www.youtube.com/watch?v=M_DgS3XGeJc&amp;ab_channel=PyTorchLightning">SwAV Loss Deep Dive by Ananya Harsh Jha</a></p>
+</div>
+<div class="section" id="sinkhorn-knopp-algorithm">
+<h1>Sinkhorn-Knopp Algorithm<a class="headerlink" href="#sinkhorn-knopp-algorithm" title="Permalink to this headline">¶</a></h1>
+<p>The goal of optimal transport is to transform one probability distribution into another with minimal cost.</p>
+<ol class="simple">
+<li><p>For example, let us allocate desserts to people according to preferences while constraining portion sizes.</p></li>
+<li><p>Let <span class="math notranslate nohighlight">\(r = (3,3,3,4,2,2,2,1)\)</span>, the portion size of dessert each person can eat (n-dimensional).</p></li>
+<li><p>Let <span class="math notranslate nohighlight">\(c = (4,2,6,4,4)\)</span>, the amount of each dessert available (m-dimensional).</p></li>
+<li><p>Let <span class="math notranslate nohighlight">\(U(r,c)=\{P\in \mathbb{R}_{&gt;0}^{n\times m} |P\textbf{1}_m=r, P^\intercal\textbf{1}_n=c \}\)</span> be the set of positive <span class="math notranslate nohighlight">\(n\times m\)</span> matrices for which rows sum to <span class="math notranslate nohighlight">\(r\)</span> and columns sum to <span class="math notranslate nohighlight">\(c\)</span>, which is the set of ways of allocating desserts to the people.</p></li>
+<li><p>Let <span class="math notranslate nohighlight">\(M\)</span> be the <span class="math notranslate nohighlight">\((n\times m)\)</span> cost (negative preference) matrix.</p></li>
+<li><p>The optimal transport problem is formally posed as $<span class="math notranslate nohighlight">\(d_M(r,c) = min_{P\in U(r,c)} \sum_{i,j} P_{ij}M_{ij}\)</span><span class="math notranslate nohighlight">\( the optimal transport between \)</span>r<span class="math notranslate nohighlight">\( and \)</span>c$.</p></li>
+<li><p>The Sinkhorn distance is $<span class="math notranslate nohighlight">\(d_M(r,c) = min_{P\in U(r,c)} \sum_{i,j} P_{ij}M_{ij}-\frac{1}{\lambda}h(P)\)</span><span class="math notranslate nohighlight">\( where \)</span>h(P)=-\sum_{i,j}P_{ij}<span class="math notranslate nohighlight">\( is the information entropy of \)</span>P$ that acts as regularization.</p></li>
+<li><p>The Sinkhorn-Knopp algorithm is an efficient method to obtain the optimal distribution matrix <span class="math notranslate nohighlight">\(P_\lambda^*\)</span> and the associated <span class="math notranslate nohighlight">\(d_M^\lambda(r,c)\)</span> based on the fact that elements of the optimal matrix are of the form $<span class="math notranslate nohighlight">\( (P_\lambda^*)_{ij} = \alpha_i\beta_je^{-\lambda M_{ij}}\)</span><span class="math notranslate nohighlight">\( with \)</span>\alpha_1,…,\alpha_n<span class="math notranslate nohighlight">\( and \)</span>\beta_1,…,\beta_n<span class="math notranslate nohighlight">\( are constants to ensure rows and columns sum to \)</span>r<span class="math notranslate nohighlight">\( and \)</span>c$ respectively.</p></li>
+<li><p>The Sinkhorn-Knopp algorithm is basically</p></li>
+<li><p>Initialise <span class="math notranslate nohighlight">\(P_\lambda = e^{-\lambda M}\)</span>.</p></li>
+<li><p>Repeat 3-4 until convergence:</p></li>
+<li><p>Scale the rows such that row sums match <span class="math notranslate nohighlight">\(r\)</span>.</p></li>
+<li><p>Scale the columns such that column sums match <span class="math notranslate nohighlight">\(c\)</span>.</p></li>
+</ol>
+<p>Reference: <a class="reference external" href="https://michielstock.github.io/posts/2017/2017-11-5-OptimalTransport/">Notes on Optimal Transport by Michiel Stock</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>  <span class="c1"># amount each of the 7 people can eat</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span>  <span class="c1"># portions of the 5 desserts available</span>
+<span class="n">M</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+              <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span>
+              <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+              <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+              <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+              <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+              <span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span>
+              <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span>  <span class="c1"># (n x m) preferences matrix</span>
+<span class="n">M</span> <span class="o">=</span> <span class="o">-</span><span class="n">M</span>  <span class="c1"># converting preferences to cost</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">baa1a268ac62</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> 
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>  <span class="c1"># amount each of the 7 people can eat</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span>  <span class="c1"># portions of the 5 desserts available</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;pandas&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Sinkhorn-Knopp Algorithm</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="k">def</span> <span class="nf">sinkhorn_knopp</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">lam</span><span class="p">):</span>
+  <span class="n">n</span><span class="p">,</span> <span class="n">m</span> <span class="o">=</span> <span class="n">M</span><span class="o">.</span><span class="n">shape</span>
+  <span class="n">P</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span> <span class="n">lam</span> <span class="o">*</span> <span class="n">M</span><span class="p">)</span>
+  <span class="n">P</span> <span class="o">/=</span> <span class="n">P</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+  <span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+
+  <span class="k">while</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">u</span> <span class="o">-</span> <span class="n">P</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">)))</span> <span class="o">&gt;</span> <span class="mf">1e-8</span><span class="p">:</span>  
+    <span class="n">u</span> <span class="o">=</span> <span class="n">P</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">P</span> <span class="o">*=</span> <span class="p">(</span><span class="n">r</span> <span class="o">/</span> <span class="n">u</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">P</span> <span class="o">*=</span> <span class="p">(</span><span class="n">c</span> <span class="o">/</span> <span class="n">P</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+  <span class="k">return</span> <span class="n">P</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">P</span> <span class="o">=</span> <span class="n">sinkhorn_knopp</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">lam</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">P</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">stacked</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/swav_7_0.png" src="../_images/swav_7_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="why-swav-works">
+<h1>Why SwAV Works<a class="headerlink" href="#why-swav-works" title="Permalink to this headline">¶</a></h1>
+<ol class="simple">
+<li><p>SwAV authors re-implemented and improveed previous clustering-based models to compare with SwAV.</p></li>
+<li><p>DeepCluster-v2 obtains 75.2% top-1 accuracy on ImageNet versus 75.3% for SwAV.</p></li>
+<li><p>However, DeepCluster-v2 is not online, making it impractical for extremely large datasets, e.g. billion scale trainings which sometimes use only a single training epoch.</p></li>
+<li><p>As seen, SwAV can work online and therefore can scale better to unlimited amounts of data.</p></li>
+</ol>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./repr"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+    <a class='left-prev' id="prev-link" href="contrastive.html" title="previous page">Contrastive Learning</a>
+    <a class='right-next' id="next-link" href="../gen/gmm.html" title="next page">Gaussian Mixture Models with TensorFlow Probability</a>
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Jet New<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  
+  </body>
+</html>
