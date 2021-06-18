@@ -398,9 +398,12 @@
 <div class="section" id="motive">
 <h2>Motive<a class="headerlink" href="#motive" title="Permalink to this headline">¶</a></h2>
 <ol class="simple">
-<li><p>Recent contrastive learning methods for unsupervised visual representation learning uses:</p></li>
+<li><p>Recent contrastive learning methods for unsupervised visual representation learning uses:</p>
+<ol class="simple">
 <li><p>A contrastive loss that compares pairs of images to push away semantically different images while pulling together semantically similar images</p></li>
 <li><p>Image augmentations that define invariances encoded in the features.</p></li>
+</ol>
+</li>
 <li><p>Instance discrimination (contrasting instances of image views) is not practical for all pairwise comparisons on a large dataset. Clustering-based methods thus approximate task by discriminating between clusters images with similar features instead of individual images.</p></li>
 <li><p>However, current clustering-based methods are computationally inefficient.</p></li>
 <li><p>Therefore, SwAV proposes a scalable, online clustering-based method, and a “swapped” prediction problem to learn visual features.</p></li>
@@ -445,11 +448,14 @@
 <li><p>The optimal transport problem is formally posed as <span class="math notranslate nohighlight">\(d_M(r,c) = min_{P\in U(r,c)} \sum_{i,j} P_{ij}M_{ij}\)</span> the optimal transport between <span class="math notranslate nohighlight">\(r\)</span> and <span class="math notranslate nohighlight">\(c\)</span>.</p></li>
 <li><p>The Sinkhorn distance is <span class="math notranslate nohighlight">\(d_M(r,c) = min_{P\in U(r,c)} \sum_{i,j} P_{ij}M_{ij}-\frac{1}{\lambda}h(P)\)</span> where <span class="math notranslate nohighlight">\(h(P)=-\sum_{i,j}P_{ij}\)</span> is the information entropy of <span class="math notranslate nohighlight">\(P\)</span> that acts as regularization.</p></li>
 <li><p>The Sinkhorn-Knopp algorithm is an efficient method to obtain the optimal distribution matrix <span class="math notranslate nohighlight">\(P_\lambda^*\)</span> and the associated <span class="math notranslate nohighlight">\(d_M^\lambda(r,c)\)</span> based on the fact that elements of the optimal matrix are of the form <span class="math notranslate nohighlight">\( (P_\lambda^*)_{ij} = \alpha_i\beta_je^{-\lambda M_{ij}}\)</span> with <span class="math notranslate nohighlight">\(\alpha_1,...,\alpha_n\)</span> and <span class="math notranslate nohighlight">\(\beta_1,...,\beta_n\)</span> are constants to ensure rows and columns sum to <span class="math notranslate nohighlight">\(r\)</span> and <span class="math notranslate nohighlight">\(c\)</span> respectively.</p></li>
-<li><p>The Sinkhorn-Knopp algorithm is basically</p></li>
+<li><p>The Sinkhorn-Knopp algorithm is basically</p>
+<ol class="simple">
 <li><p>Initialise <span class="math notranslate nohighlight">\(P_\lambda = e^{-\lambda M}\)</span>.</p></li>
 <li><p>Repeat 3-4 until convergence:</p></li>
 <li><p>Scale the rows such that row sums match <span class="math notranslate nohighlight">\(r\)</span>.</p></li>
 <li><p>Scale the columns such that column sums match <span class="math notranslate nohighlight">\(c\)</span>.</p></li>
+</ol>
+</li>
 </ol>
 <p>Reference: <a class="reference external" href="https://michielstock.github.io/posts/2017/2017-11-5-OptimalTransport/">Notes on Optimal Transport by Michiel Stock</a></p>
 <div class="cell docutils container">
