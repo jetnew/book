@@ -1,0 +1,33 @@
+- file: intro
+
+- part: about
+  chapters:
+  - file: about/about
+    sections:
+    - file: about/projects
+    - file: about/resume
+
+- part: reinforcement learning
+  chapters:
+  - file: rl/dqn
+  - file: rl/cem
+
+- part: representation learning
+  chapters:
+  - file: repr/contrastive
+
+- part: generative model
+  chapters:
+  - file: gen/gmm
+
+- part: causality
+  chapters:
+  - file: causal/ci
+
+- part: evolutionary algorithms
+  chapters:
+  - file: evo/ga
+
+- part: statistics
+  chapters:
+  - file: stats/mi

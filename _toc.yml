@@ -10,10 +10,12 @@
 - part: reinforcement learning
   chapters:
   - file: rl/dqn
+  - file: rl/cem
 
 - part: representation learning
   chapters:
   - file: repr/contrastive
+  - file: repr/swav
 
 - part: generative model
   chapters:
